@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import "./auth";
-import { auth, googleProvider } from './auth';
+import { auth, fbProvider, GithubProvider, googleProvider } from './auth';
 
 function App() {
 
@@ -15,6 +15,24 @@ function App() {
       console.log(error)
     }
   }
+
+  const fbSigin = async() => {
+    try {
+        await auth.signInWithPopup(fbProvider);
+        setUser(await auth.currentUser);
+    }catch(error){ 
+      console.log(error)
+    }
+  }
+
+  const git = async () => {
+    try {
+      await auth.signInWithPopup(GithubProvider);
+      setUser(await auth.currentUser);
+  }catch(error){ 
+    console.log(error)
+  }
+  }
   return (
     <div className="App">
      <h3>React Authentication</h3>
@@ -23,11 +41,11 @@ function App() {
           <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="google icon" />
           <p>sigin with google</p>
         </button>
-        <button className='button-container'>
+        <button className='button-container' onClick={fbSigin}>
           <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="fb icon"/>
           <p>sigin with facebook</p>
         </button>
-        <button className='button-container'>
+        <button className='button-container' onClick={git}>
           <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github icon"/>
           <p>sigin with github</p>
         </button>
